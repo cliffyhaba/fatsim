@@ -52,9 +52,11 @@ class Toc
   
       print "TOC_ARY SIZE = " + @toc_ary.size.to_s + "\n"
 
-                        # Sort the array of records
+      # Sort the array of records
       @toc_ary.sort!
 
+######################## WORK OUT THE FRAGMENTING HERE, THE TOC RECORS ARE NOW SORTED
+# RETURN ret
                         # Get the lowest offset value or zero
       if @toc_ary.empty? || @toc_ary[0].get_offset > 0
         @offset = 0     # Let part take care of the fragmenting
@@ -69,7 +71,9 @@ class Toc
           old_pos = @toc_ary[i].get_offset + @toc_ary[i].get_length
         end
       end
-      
+
+# END
+
       r = Record.new
       r.set_fname name
       r.set_offset @offset

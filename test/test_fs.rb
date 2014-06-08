@@ -69,45 +69,6 @@ def show_hex ary, pos = 0
   end
 end
 
-# Test the Record class
-def record_test
-  print "***** Record Test\n"
-  r = Record.new
-
-  # create a new record and initialise with standard values
-  r.set_fname "abcd"
-  r.set_offset 123
-  
-  # check all OK
-  $LOG.info "offset = [%d]" % r.get_offset
-  $LOG.info "fname = [%s]" % r.get_fname
-
-  # get byte representation of the record
-
-  res = r.get_byte_offset
-  # Then check the dump is OK
-  dump res
-
-  res = r.get_byte_fname
-  # Then check the dump is OK
-  dump res
-
-  res = r.get_byte_rec
-  # Then check the dump is OK
-  dump res
-
-  newr = Record.new
-
-  # Set up new record with byte data
-  newr.set_byte_offset r.get_byte_offset
-  newr.set_byte_fname r.get_byte_fname
-
-  # check all OK
-  $LOG.info "NEW offset = [%d]" % newr.get_offset
-  $LOG.info "NEW fname = [%s]" % newr.get_fname
-  print "***** Record Test\n"
-end
-
 #
 ############# Test Code Main
 #
