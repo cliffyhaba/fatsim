@@ -1,0 +1,47 @@
+
+$LOAD_PATH <<'.'<<'lib'
+
+require 'rake/testtask'
+require 'utils'
+
+desc  "Run Unit Tests on FatSim"
+
+Rake::TestTask.new(name=:test) do |t|
+	  t.libs << "test"
+	  t.test_files = FileList['test/test*.rb']
+	  t.verbose = true
+end
+
+Rake::TestTask.new(name=:quiet) do |t|
+	  t.libs << "test"
+	  t.test_files = FileList['test/test*.rb']
+	  t.verbose = false
+end
+
+task  :default => :what
+
+task :q  => [:header, :quiet, :footer]
+
+task  :build do
+	(0..5).each { |i|
+    puts"=> Build What?"
+	} 
+end
+
+task  :what => [:header, :test, :footer]
+
+task  :header do
+  if RUBY_PLATFORM.include?("linux")
+    color(RED) { puts "\n=~=~=~=~=~=~=~=~=~=~=~=~ Start of Test =~=~=~=~=~=~=~=~=~=~=~=~" }
+  else
+    puts "\n\n=~=~=~=~=~=~=~=~=~=~=~=~ Start of Test =~=~=~=~=~=~=~=~=~=~=~=~\n" 	
+  end
+end
+
+task  :footer do
+  if RUBY_PLATFORM.include?("linux") == true
+    color(GREEN) { puts "\n=~=~=~=~=~=~=~=~=~=~=~=~ End of Test =~=~=~=~=~=~=~=~=~=~=~=~" }
+  else
+    puts "\n=~=~=~=~=~=~=~=~=~=~=~=~ End of Test =~=~=~=~=~=~=~=~=~=~=~=~\n"
+  end
+end

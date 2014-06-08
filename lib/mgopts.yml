@@ -1,0 +1,11 @@
+Log Options:
+  format: brief   # brief or full
+  output: stderr  # stderr, stdout or file name
+  level: WARN     # INFO, WARN or FATAL
+Labels:
+  root: FatSim
+  root comment: FAT Simulator
+Output:
+  image name: view.png 
+Osdep:
+  viewer: 'i_view32.exe'
