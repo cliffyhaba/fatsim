@@ -34,9 +34,9 @@ class Toc
   end
   
   # Add an entry to TOC
-  # params:: filename
-  # returns:: nil for fail
-  # TODO
+  # params: filename
+  # returns: nil for fail
+  # TODO      a list of offsets and lengths to place in part
   def add name, len
     $LOG.info "Adding an entry to TOC, length is %d" % len
         
@@ -80,7 +80,7 @@ class Toc
       @offset += len 
       @part_used += len
     end    
-    ret
+    ret           # return details
   end
   
   def get_offset name

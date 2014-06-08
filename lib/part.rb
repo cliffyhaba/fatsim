@@ -22,16 +22,20 @@ class Partition
   # Add the data to the partition
   # offset is the first bit of part that we can use.
   # This is the FILE WRITE!!
+  # called from line 115  (writeFile) in filesystem, after getting details from toc.add 
 
   def add data, offset
     next_frag = 0
     $LOG.debug "Setting partition at offset " + offset.to_s + " To " + data
+    len = data.length
+
     # can we fit it in??
-    # lets say no. so we havve to create a ????? and use that as
+    # lets say no. so we have to create a ????? and use that as
     # an enumerator
     #
 
     
+
     dary = [data].pack("a*").unpack("C*")
     @part[offset, dary.length] = dary
 
