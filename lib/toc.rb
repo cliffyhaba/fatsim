@@ -69,9 +69,12 @@ class Toc
 
       haction = get_action_hash hr, len
 
-      puts "haction is #{haction}"
+      # puts "haction is #{haction}"
 
       # add the record to the TOC table
+      
+      # Change TOC details to reflect haction details
+
       r = Record.new
       r.set_fname name
       r.set_offset @offset
@@ -81,7 +84,7 @@ class Toc
       else
         r.set_status 0    # file fits in a single block
       end
-      
+
       @toc_ary << r   
 
       ret = @offset
@@ -91,7 +94,7 @@ class Toc
       # Sort the array of records
       sort
     end    
-    ret           # return details
+    haction          # return details
   end
   
   def get_offset name

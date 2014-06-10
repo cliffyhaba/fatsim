@@ -108,10 +108,17 @@ class MemFileSystem < FileSystem
     }
     
     # Check we have the space available
-    offset = @toc.add name, req #  + FileSystem::get_link_size
+#    offset = @toc.add name, req #  + FileSystem::get_link_size
+    haction = @toc.add name, req #  + FileSystem::get_link_size
+
     print "WRITE] size available is: " + rem.to_s + "\n"
     print "WRITE] size required  is: " + req.to_s + "\n"
-        
+    
+    puts "haction is #{haction}"
+    puts "you are here"
+
+    return
+
     # Shove it in, we know it will fit ;-o oooooh!!
     # @toc.insert st,data
     # @part.insert st, data
