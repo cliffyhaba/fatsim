@@ -28,6 +28,18 @@ class Toc
     @toc_ary
   end
 
+  # return the remaining space available
+  def get_available
+    hr = disk_details
+    tot = 0
+    disk_details.each { |k, a|
+      if a[0] == :gap
+        tot += (a[1])
+      end
+    }
+    tot
+  end
+
   # Like a format
   def reset
     @toc_ary = Array.new
@@ -52,21 +64,12 @@ class Toc
   
       print "TOC_ARY SIZE = " + @toc_ary.size.to_s + "\n"
 
-      # Sort the array of records
-      sort
+      # get a hash of the way the partition looks at the moment
+      hr = disk_details
 
-######################## WORK OUT THE FRAGMENTING HERE, THE TOC RECORS ARE NOW SORTED
-# RETURN ret
-      # h = Hash.new
+      haction = get_action_hash hr, len
 
-
-                            # Get the lowest offset value or zero
-      if @toc_ary.empty?    # || @toc_ary[0].get_offset > 0
-        @offset = 0         # Let part take care of the fragmenting
-        print "***** INITIALISING TOC RECORD\n"
-      else
-         disk_details
-      end
+      puts "haction is #{haction}"
 
       # add the record to the TOC table
       r = Record.new
@@ -79,6 +82,9 @@ class Toc
       ret = @offset
       @offset += len 
       @part_used += len
+
+      # Sort the array of records
+      sort
     end    
 
     ret           # return details
@@ -158,10 +164,28 @@ class Toc
     # puts "partition size is #{@part_size}"
     
     if old_pos < @part_size
-      h.store(old_pos, [:gap, @part_size])
+      h.store(old_pos, [:gap, @part_size - old_pos])
       # puts("END GAP start - #{old_pos} length - #{@part_size}")
     end
     h
+  end
+
+  def get_action_hash h, size
+    ary = Array.new
+
+    disk_details.each { |k, a|
+      if a[0] == :gap
+        # size -= a[1]
+        if size <= a[1]
+          ary.push [k, size.abs]
+          break
+        else
+          ary.push [k, a[1]]
+          size -= a[1]
+        end
+      end
+    }
+    ary
   end
 
 end

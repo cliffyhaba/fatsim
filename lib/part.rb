@@ -44,9 +44,11 @@ class Partition
     @rem -= (dary.length + FileSystem::get_link_size)
   end
   
+=begin
   def get_rem
     @rem
   end
+=end
   
   def take offset, length
     @part[offset, length]

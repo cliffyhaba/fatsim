@@ -1,11 +1,16 @@
 #!/usr/bin/ruby
 
 # Author:: Cliff
-# Version:: 1v0
+# Version:: 1v1
 
 require 'logger'
 require 'toc'
 require 'part'
+
+# Do we automatically fit new files into available locations
+# at the start of the disk, or do we try to keep files un-fragmented
+# if possible. A value of yes means the former.
+FRAG_ALWAYS = "yes"
 
 # =A template FileSystem class
 # - Can derive from this to implement file systems in RAM, flash etc.
@@ -90,7 +95,7 @@ class MemFileSystem < FileSystem
   def writeFile name, data
     # Add name to TOC
     req = data.length + FileSystem::get_link_size
-    rem = @part.get_rem
+    rem = @toc.get_available
     if req > rem
       raise "Out of Disk Space" + " - " + __FILE__ + " " + __LINE__.to_s
     end
