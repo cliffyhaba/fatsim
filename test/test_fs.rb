@@ -157,7 +157,7 @@ if fhi
   puts "Write file10"
   fhi.writeFile("file10", "!!!!!!!!!!")
   fhi.pretty_display
-  show_hex fhi.get_bytes, 9
+  show_hex fhi.get_bytes, 10
 
 
   rescue Exception => e

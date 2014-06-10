@@ -76,7 +76,12 @@ class Toc
       r.set_fname name
       r.set_offset @offset
       r.set_length len  
-      r.set_status 0
+      if haction.size > 1
+        r.set_status 1    # start of a fragmented file
+      else
+        r.set_status 0    # file fits in a single block
+      end
+      
       @toc_ary << r   
 
       ret = @offset
@@ -86,7 +91,6 @@ class Toc
       # Sort the array of records
       sort
     end    
-
     ret           # return details
   end
   
@@ -175,13 +179,12 @@ class Toc
 
     disk_details.each { |k, a|
       if a[0] == :gap
-        # size -= a[1]
-        if size <= a[1]
+        if size <= a[1]         # already have the last link overhead
           ary.push [k, size.abs]
           break
         else
           ary.push [k, a[1]]
-          size -= a[1]
+          size -= (a[1] - 2)    # adjust by 2 due to link overhead
         end
       end
     }
