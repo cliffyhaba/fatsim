@@ -155,17 +155,17 @@ if fhi
   fhi.get_bytes 9
 
   puts "Write file10"
-  fhi.writeFile("file10", "!!!!!!!!!!")
+  fhi.writeFile("file10", "!!!!")
   fhi.pretty_display
   fhi.get_bytes 10
 
   puts "Write file11"
-  fhi.writeFile("file11", "aaaa")
+  fhi.writeFile("file11", "aaaaaaaaaa")
   fhi.pretty_display
   fhi.get_bytes 11
 
-  puts "delete file11"
-  fhi.delFile "file11"
+  puts "delete file10"
+  fhi.delFile "file10"
   fhi.pretty_display
   fhi.get_bytes 12
 

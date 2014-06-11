@@ -68,6 +68,7 @@ class Toc
       # get a hash of the way the partition looks at the moment
       hr = disk_details
 
+      # work out where we are going to put the file
       haction = get_action_hash hr, len
 
       # puts "In add - haction is #{haction}"

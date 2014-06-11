@@ -65,8 +65,8 @@ class FileHandler
 
   def get_bytes n
     puts "DUMP #{n}"
+
     dump_toc
-    puts "======================"
     dump_part
   end
 
