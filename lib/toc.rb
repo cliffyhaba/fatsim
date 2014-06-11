@@ -15,7 +15,8 @@ class Toc
   def initialize size
     @size = size
     $LOG.info "Initialising TOC: Size is " + @size.to_s + " bytes"
-    @max_tocs = (@size / Record::TOC_ENTRY_SIZE)
+    # TODO changed this to + 200
+    @max_tocs = (@size / Record::TOC_ENTRY_SIZE) + 200
     print "So we can have %d TOC entries\n" % @max_tocs
     @toc_ary = Array.new
     @offset = 0
@@ -53,8 +54,8 @@ class Toc
     $LOG.info "Adding an entry to TOC, length is %d" % len
         
     if @toc_ary.size >= @max_tocs
-      $LOG.warn "TOC entry limit reached"
-      ret = -1    
+      $LOG.warn "TOC entry limit reached, continue..."
+      # ret = -1    
     elsif @part_used + len > @part_size
       $LOG.warn "TOC No More Space: Used = " \
         + @part_used.to_s + " Len = "        \
@@ -69,31 +70,37 @@ class Toc
 
       haction = get_action_hash hr, len
 
-      # puts "haction is #{haction}"
+      # puts "In add - haction is #{haction}"
 
       # add the record to the TOC table
       
       # Change TOC details to reflect haction details
+      cnt = 1
+      idx = haction.length
+      haction.each { |h|
+        r = Record.new
+        r.set_fname name
+        r.set_offset h[0]
+        r.set_length h[1]  
+        if cnt < idx
+          r.set_status 1    # start of a fragmented file
+        else
+          r.set_status 0    # file fits in a single block
+        end
+        cnt += 1
+        @toc_ary << r   
+      }
 
-      r = Record.new
-      r.set_fname name
-      r.set_offset @offset
-      r.set_length len  
-      if haction.size > 1
-        r.set_status 1    # start of a fragmented file
-      else
-        r.set_status 0    # file fits in a single block
-      end
-
-      @toc_ary << r   
-
-      ret = @offset
-      @offset += len 
       @part_used += len
 
       # Sort the array of records
       sort
-    end    
+    end  
+    if nil == haction || 0 == haction.length
+      raise RuntimeError, "A B O R T *****************************************"
+      # abort
+    end
+
     haction          # return details
   end
   

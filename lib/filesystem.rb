@@ -113,21 +113,12 @@ class MemFileSystem < FileSystem
 
     print "WRITE] size available is: " + rem.to_s + "\n"
     print "WRITE] size required  is: " + req.to_s + "\n"
-    
+
     puts "haction is #{haction}"
     puts "you are here"
-
-    return
-
-    # Shove it in, we know it will fit ;-o oooooh!!
-    # @toc.insert st,data
-    # @part.insert st, data
     
-    if offset != -1
-      @part.add data, offset
-    else 
-      raise "Cannot write TOC" + " - " + __FILE__ + " " + __LINE__.to_s
-    end
+    @part.add haction, data
+
   end
 
   def delFile name
@@ -142,15 +133,16 @@ class MemFileSystem < FileSystem
   
   # Display Table of Contents in hex
   def dump_toc
-    print "\n***** TOC"
+    ary = Array.new
     @toc.get_toc.each { |t|
-      dump t.get_byte_rec
+      ary << t.get_byte_rec
     }    
+    ary.flatten
   end
 
   # Display data in hex
   def dump_part
-    dump @part.get_part
+    @part.get_part
   end
 
   # Return all disk as binary array

@@ -51,12 +51,23 @@ class FileHandler
   end
   
   def dump_toc
-    @disk.dump_toc
+    dump @disk.dump_toc
   end
   
+  def dump_part
+    dump @disk.dump_part
+  end
+
   # method to show TOC records as hex and hex dump the partition
-  def get_bytes
+  def get_bytes_all
     @disk.get_byte_disk
+  end
+
+  def get_bytes n
+    puts "DUMP #{n}"
+    dump_toc
+    puts "======================"
+    dump_part
   end
 
   def pretty_display
