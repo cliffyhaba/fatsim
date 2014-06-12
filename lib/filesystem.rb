@@ -136,6 +136,10 @@ class MemFileSystem < FileSystem
     }    
   end
   
+  def get_free
+    @toc.get_available
+  end
+  
   # Display Table of Contents in hex
   def dump_toc
     ary = Array.new

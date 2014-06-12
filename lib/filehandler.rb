@@ -15,7 +15,8 @@ class FileHandler
     @disk = MemFileSystem.new size
   end
 
-  def getcount
+  def get_free
+    @disk.get_free
   end
 
   def format

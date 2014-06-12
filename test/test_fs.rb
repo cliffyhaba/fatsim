@@ -273,6 +273,22 @@ if fhi
   rr = rrr.map { |x| x.chr}.join
   fhi.get_bytes 22
 
+  assert "rtaa" == rr, "File file3 write/read failed"
+  
+  fhi.delFile "6666"
+
+  fhi.writeFile("file4", "asdf")
+  rrr = fhi.readFile "file4"
+  rr = rrr.map { |x| x.chr}.join
+  fhi.get_bytes 23
+
+  puts "free - #{fhi.get_free} bytes"
+
+
+  gee = fhi.readFile "8888"
+  ge = gee.map { |x| x.chr}.join
+  assert ge == "EIGHTEIGHTEIGHTEIGHTEIGHTEIGHTEIGHTEIGHTEIGHTEIGHT"
+
   rescue Exception => e
     print "TEST FAILED: " + e.message
   end
