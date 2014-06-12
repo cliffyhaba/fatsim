@@ -63,7 +63,7 @@ class Toc
       ret = -1        
     else
   
-      print "TOC_ARY SIZE = " + @toc_ary.size.to_s + "\n"
+      # print "TOC_ARY SIZE = " + @toc_ary.size.to_s + "\n"
 
       # get a hash of the way the partition looks at the moment
       hr = disk_details
@@ -71,7 +71,7 @@ class Toc
       # work out where we are going to put the file
       haction = get_action_hash hr, len
 
-      puts "ZZZZZ In add - haction is #{haction}"
+      # puts "ZZZZZ In add - haction is #{haction}"
 
       # add the record to the TOC table
       

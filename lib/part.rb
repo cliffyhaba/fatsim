@@ -29,7 +29,7 @@ class Partition
     # $LOG.debug "Setting partition at offset " + offset.to_s + " To " + data
     len = data.length
 
-    puts "In part add data length is #{data.length}"
+    # puts "In part add data length is #{data.length}"
     cnt = 1
     idx = haction.length
     dindex = 0
@@ -48,7 +48,7 @@ class Partition
     haction.each { |a|
       dary = [data[dindex, (a[1] - 2)]]
       @part[a[0], (a[1] - 2)] = dary.pack("a*").unpack("C*")
-      puts "fl[cnt - 1] = #{fl[cnt - 1]}"
+      # puts "fl[cnt - 1] = #{fl[cnt - 1]}"
       if cnt < idx
         @part[a[0] + (a[1] - 2), 2] = [fl[cnt - 1]].pack("n").unpack("C2")
       else

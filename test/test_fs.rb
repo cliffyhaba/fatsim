@@ -146,32 +146,32 @@ if fhi
 =end
   
   puts "FINALLY LOOKS LIKE THIS..."
-  fhi.pretty_display
+  # fhi.pretty_display
 
   fhi.delFile "3333"
 
   puts "AFTER DELETING FILE3 IT LOOKS LIKE THIS..."
-  fhi.pretty_display
+  # fhi.pretty_display
   fhi.get_bytes 9
 
   puts "Write 5555"
   fhi.writeFile("5555", "FIVE5FIVE5FIVE")
-  fhi.pretty_display
+  # fhi.pretty_display
   fhi.get_bytes 10
 
   puts "Write 6666"
   fhi.writeFile("6666", "SIXSIXSIXSIXSIXSIX")
-  fhi.pretty_display
+  # fhi.pretty_display
   fhi.get_bytes 11
 
   puts "delete 5555"
   fhi.delFile "5555"
-  fhi.pretty_display
+  # fhi.pretty_display
   fhi.get_bytes 12
 
   puts "Write 7777"
   fhi.writeFile("7777", "SEVENSEVENSEVENSEVENSEVENSEVENSEVEN")
-  fhi.pretty_display
+  # fhi.pretty_display
   fhi.get_bytes 13
 
   fhi.lst
@@ -201,7 +201,7 @@ if fhi
 
   puts "Write 8888"
   fhi.writeFile("8888", "EIGHTEIGHTEIGHTEIGHTEIGHTEIGHTEIGHTEIGHTEIGHTEIGHT")
-  fhi.pretty_display
+  # fhi.pretty_display
   fhi.get_bytes 15
 
   fhi.lst
@@ -217,7 +217,7 @@ if fhi
 
   puts "Write 9999"
   fhi.writeFile("9999", "NINENINENINENINENINE")
-  fhi.pretty_display
+  # fhi.pretty_display
   fhi.get_bytes 16
   fhi.lst
   puts "Read file 9999"
@@ -227,7 +227,7 @@ if fhi
 
   puts "Write AAAA"
   fhi.writeFile("AAAA", "AAAAAAAAAAAAAAAAAA")
-  fhi.pretty_display
+  # fhi.pretty_display
   fhi.get_bytes 17
   fhi.lst
   puts "Read file AAAA"
@@ -241,7 +241,7 @@ if fhi
 
   puts "Write AAAA"
   fhi.writeFile("AAAA", "Hello \n World")
-  fhi.pretty_display
+  # fhi.pretty_display
   fhi.get_bytes 17
   fhi.lst
   puts "Read file AAAA"

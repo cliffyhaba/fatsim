@@ -105,7 +105,7 @@ class MemFileSystem < FileSystem
     end
     
     @toc.get_toc.each { |i|
-      print "!!!!! get_toc " + i.get_fname + "\n"
+      # print "!!!!! get_toc " + i.get_fname + "\n"
       if i.get_fname == name
         raise "File Already Exists: " + name + " - " + __FILE__ + " " + __LINE__.to_s
       end      
@@ -115,11 +115,11 @@ class MemFileSystem < FileSystem
 #    offset = @toc.add name, req #  + FileSystem::get_link_size
     haction = @toc.add name, req #  + FileSystem::get_link_size
 
-    print "WRITE] size available is: " + rem.to_s + "\n"
-    print "WRITE] size required  is: " + req.to_s + "\n"
+    # print "WRITE] size available is: " + rem.to_s + "\n"
+    # print "WRITE] size required  is: " + req.to_s + "\n"
 
-    puts "haction is #{haction}"
-    puts "you are here"
+    # puts "haction is #{haction}"
+    # puts "you are here"
     
     @part.add haction, data
 
