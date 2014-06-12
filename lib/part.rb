@@ -75,9 +75,13 @@ class Partition
   end
 =end
   
-  def take offset, length
-    puts "TAKE - #{offset} #{length}"
-    @part[offset, length]
+  def take fd
+    # puts "TAKE - #{fd}"
+    r = []
+    fd.each { |a|
+      r << @part[a[0], a[1]]
+    }
+    r.flatten
   end
   
 end

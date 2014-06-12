@@ -32,11 +32,13 @@ class FileHandler
 
   def readFile(name)
     begin
-      @disk.readFile name
+      r = @disk.readFile name
     rescue Exception => e
       $LOG.warn e.message
       nil
     end
+    # puts "fhi returning #{r}"
+    r
   end
 
   # Write/create a new file

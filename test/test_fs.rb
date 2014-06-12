@@ -179,13 +179,20 @@ if fhi
   puts "Read file 2222"
   fc = fhi.readFile "2222"
   puts "raw = #{fc}"
-  str = fc[0...-2].pack('c*')
+  # str = fc[0...-2].pack('c*')
+
+  str = fc.map {|x| x.chr}.join
 
   puts "Contents of 2222: - #{str}"
 
-  puts "Read file 4444"
-  puts "Read file 6666"
+  # puts "Read file 4444"
+  # puts "Read file 6666"
+
   puts "Read file 7777"
+  fc = fhi.readFile "7777"
+  # puts "raw = #{fc}"
+  str = fc.map {|x| x.chr}.join
+  puts "Contents of 7777: - #{str}"
 
   rescue Exception => e
     print "TEST FAILED: " + e.message

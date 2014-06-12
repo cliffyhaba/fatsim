@@ -150,12 +150,27 @@ class Toc
     puts "#{disk_details}"
   end
 
+  # get details relating to a particular file name
+  def get_file_details name
+    # puts "get_file_details for #{name}"
+    ret = Array.new
+    @toc_ary.each { |i|
+      if i.get_fname == name
+        # puts "found #{name} offset is #{i.get_offset}"
+        ret << [i.get_offset, i.get_length - 2]
+      end
+    }
+    ret
+  end
+
   private
 
+  # get details of used and unused areas on partition
   def disk_details
     h           = Hash.new
     old_pos     = 0
 
+    # make sure that the TOC array is sorted in start offset order
     sort
    
     for i in (0..@toc_ary.size - 1) 
@@ -187,6 +202,7 @@ class Toc
     h
   end
 
+  # create an array with details of unused areas of partition
   def get_action_hash h, size
     ary = Array.new
 

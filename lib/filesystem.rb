@@ -83,14 +83,17 @@ class MemFileSystem < FileSystem
   end
   
   def readFile name
-    offset = @toc.get_offset name
-    length = @toc.get_length name
-    if nil == offset || nil == length
+    fd = @toc.get_file_details name
+
+    if nil == fd
       puts "<#{name}> File not Found"
       raise "<" + name + "> File Not Found" + " - " + __FILE__ + " " + __LINE__.to_s
     else
-      @part.take offset, length
+      puts "readFile - file details are #{fd}"
+      fb = @part.take fd
     end
+    # puts "fs returning #{fb}"
+    fb
   end
   
   def writeFile name, data
