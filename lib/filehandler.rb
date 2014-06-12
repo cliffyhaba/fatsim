@@ -24,7 +24,10 @@ class FileHandler
 
   # list files to STDOUT
   def lst
-    @disk.lst
+    color(BLUE) {
+      puts "\n==>"
+      @disk.lst
+    }
   end
 
   def readFile(name)

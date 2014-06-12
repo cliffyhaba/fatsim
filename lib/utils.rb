@@ -20,6 +20,8 @@ end
 
 def dump what
   # print "Dump size = " + what.length.to_s
+  
+  asky = []
 
   what.each_index { |i|
     
@@ -34,15 +36,43 @@ def dump what
     end
 
     if 0 == (i % 16)
+      if i > 0
+        print "  "
+        dsp asky
+      end
+      asky.clear
       print "\n"
       printf("%02X ", ia)
+      asky << ia
     else
       printf("%02X ", ia)
+      asky << ia
     end
   }
+  print "  "
+  dsp asky
   
   # print "\n**************************************************\n"
   print "\n"
+end
+
+def dsp a
+  idx = 0
+  a.each { |e|
+    if idx == 8
+      print " "
+    end
+
+    if e > 31 && e < 128
+      print e.chr
+    else
+      print "."
+    end
+    idx += 1
+    if idx == 16
+      idx = 0
+    end
+  }
 end
 
 class MyString < String

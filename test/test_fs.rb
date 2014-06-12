@@ -98,31 +98,31 @@ if fhi
     fhi.format
         
     # 2. Do a write
-    fhi.writeFile "FILE1", "11111"   
+    fhi.writeFile "1111", "11111"   
     puts ""
     color(BLUE) { fhi.lst }
     fhi.get_bytes  2  
       
     # 5. Add another file and list
-    fhi.writeFile("FILE2", "222222")
+    fhi.writeFile("2222", "222222")
     puts ""
     color(BLUE) { fhi.lst }
     fhi.get_bytes 5
 
     # 6. Delete FILE1
-    fhi.delFile "FILE1"
+    fhi.delFile "1111"
     puts ""
     color(BLUE) { fhi.lst }
     fhi.get_bytes 6
     
     # 7. Add FILE3 this should use the freed space at the beginning of part
-    fhi.writeFile("FILE3", "3333333333")
+    fhi.writeFile("3333", "3333333333")
     puts ""
     color(BLUE) { fhi.lst }
     fhi.get_bytes 7
 
     # 8. Add FILE4 this should use the freed space at the beginning of part
-    fhi.writeFile("FILE4", "444444444444444444444444444444")
+    fhi.writeFile("4444", "444444444444444444444444444444")
     puts ""
     color(BLUE) { fhi.lst }
     fhi.get_bytes 8
@@ -148,31 +148,33 @@ if fhi
   puts "FINALLY LOOKS LIKE THIS..."
   fhi.pretty_display
 
-  fhi.delFile "FILE3"
+  fhi.delFile "3333"
 
   puts "AFTER DELETING FILE3 IT LOOKS LIKE THIS..."
   fhi.pretty_display
   fhi.get_bytes 9
 
-  puts "Write file10"
-  fhi.writeFile("file10", "!!!!")
+  puts "Write 5555"
+  fhi.writeFile("5555", "5555")
   fhi.pretty_display
   fhi.get_bytes 10
 
-  puts "Write file11"
-  fhi.writeFile("file11", "aaaaaaaaaa")
+  puts "Write 6666"
+  fhi.writeFile("6666", "6666666666")
   fhi.pretty_display
   fhi.get_bytes 11
 
-  puts "delete file10"
-  fhi.delFile "file10"
+  puts "delete 5555"
+  fhi.delFile "5555"
   fhi.pretty_display
   fhi.get_bytes 12
 
-  puts "Write file13"
-  fhi.writeFile("file13", "bbbbbbbb")
+  puts "Write 7777"
+  fhi.writeFile("7777", "77777777")
   fhi.pretty_display
   fhi.get_bytes 13
+
+  fhi.lst
 
   rescue Exception => e
     print "TEST FAILED: " + e.message

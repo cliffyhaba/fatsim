@@ -71,7 +71,7 @@ class Toc
       # work out where we are going to put the file
       haction = get_action_hash hr, len
 
-      # puts "In add - haction is #{haction}"
+      puts "ZZZZZ In add - haction is #{haction}"
 
       # add the record to the TOC table
       
@@ -130,7 +130,9 @@ class Toc
   def list
     ret = Array.new
     @toc_ary.each { |i|
-      ret << i.get_fname
+      if i.get_status == 0
+        ret << i.get_fname
+      end
     }
     ret
   end
@@ -194,8 +196,11 @@ class Toc
           ary.push [k, size.abs]
           break
         else
-          ary.push [k, a[1]]
-          size -= (a[1] - 2)    # adjust by 2 due to link overhead
+          puts "A1 = #{a[1]}"
+          if a[1] > 3
+            ary.push [k, a[1]]
+            size -= (a[1] - 2)    # adjust by 2 due to link overhead
+          end
         end
       end
     }
