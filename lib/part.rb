@@ -76,6 +76,7 @@ class Partition
 =end
   
   def take offset, length
+    puts "TAKE - #{offset} #{length}"
     @part[offset, length]
   end
   

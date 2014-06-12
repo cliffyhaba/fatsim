@@ -86,7 +86,8 @@ class MemFileSystem < FileSystem
     offset = @toc.get_offset name
     length = @toc.get_length name
     if nil == offset || nil == length
-      raise "File Not Found" + " - " + __FILE__ + " " + __LINE__.to_s
+      puts "<#{name}> File not Found"
+      raise "<" + name + "> File Not Found" + " - " + __FILE__ + " " + __LINE__.to_s
     else
       @part.take offset, length
     end

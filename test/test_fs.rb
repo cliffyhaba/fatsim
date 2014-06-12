@@ -98,13 +98,13 @@ if fhi
     fhi.format
         
     # 2. Do a write
-    fhi.writeFile "1111", "11111"   
+    fhi.writeFile "1111", "ONE"   
     puts ""
     color(BLUE) { fhi.lst }
     fhi.get_bytes  2  
       
     # 5. Add another file and list
-    fhi.writeFile("2222", "222222")
+    fhi.writeFile("2222", "TWOTWO")
     puts ""
     color(BLUE) { fhi.lst }
     fhi.get_bytes 5
@@ -116,13 +116,13 @@ if fhi
     fhi.get_bytes 6
     
     # 7. Add FILE3 this should use the freed space at the beginning of part
-    fhi.writeFile("3333", "3333333333")
+    fhi.writeFile("3333", "THREE3THREE")
     puts ""
     color(BLUE) { fhi.lst }
     fhi.get_bytes 7
 
     # 8. Add FILE4 this should use the freed space at the beginning of part
-    fhi.writeFile("4444", "444444444444444444444444444444")
+    fhi.writeFile("4444", "FOURFOURFOURFOUR")
     puts ""
     color(BLUE) { fhi.lst }
     fhi.get_bytes 8
@@ -155,12 +155,12 @@ if fhi
   fhi.get_bytes 9
 
   puts "Write 5555"
-  fhi.writeFile("5555", "5555")
+  fhi.writeFile("5555", "FIVE5FIVE5FIVE")
   fhi.pretty_display
   fhi.get_bytes 10
 
   puts "Write 6666"
-  fhi.writeFile("6666", "6666666666")
+  fhi.writeFile("6666", "SIXSIXSIXSIXSIXSIX")
   fhi.pretty_display
   fhi.get_bytes 11
 
@@ -170,11 +170,22 @@ if fhi
   fhi.get_bytes 12
 
   puts "Write 7777"
-  fhi.writeFile("7777", "77777777")
+  fhi.writeFile("7777", "SEVENSEVENSEVENSEVENSEVENSEVENSEVEN")
   fhi.pretty_display
   fhi.get_bytes 13
 
   fhi.lst
+
+  puts "Read file 2222"
+  fc = fhi.readFile "2222"
+  puts "raw = #{fc}"
+  str = fc[0...-2].pack('c*')
+
+  puts "Contents of 2222: - #{str}"
+
+  puts "Read file 4444"
+  puts "Read file 6666"
+  puts "Read file 7777"
 
   rescue Exception => e
     print "TEST FAILED: " + e.message

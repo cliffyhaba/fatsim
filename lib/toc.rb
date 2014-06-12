@@ -196,8 +196,8 @@ class Toc
           ary.push [k, size.abs]
           break
         else
-          puts "A1 = #{a[1]}"
-          if a[1] > 3
+          # puts "A1 = #{a[1]}"
+          if a[1] > 3             # the minimum we need, 1 byte and two byte link
             ary.push [k, a[1]]
             size -= (a[1] - 2)    # adjust by 2 due to link overhead
           end
