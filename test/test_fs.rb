@@ -194,6 +194,66 @@ if fhi
   str = fc.map {|x| x.chr}.join
   puts "Contents of 7777: - #{str}"
 
+  fhi.delFile "7777"
+  fhi.lst
+
+  fhi.get_bytes 14
+
+  puts "Write 8888"
+  fhi.writeFile("8888", "EIGHTEIGHTEIGHTEIGHTEIGHTEIGHTEIGHTEIGHTEIGHTEIGHT")
+  fhi.pretty_display
+  fhi.get_bytes 15
+
+  fhi.lst
+
+  puts "Read file 8888"
+  fc = fhi.readFile "8888"
+  # puts "raw = #{fc}"
+  # str = fc[0...-2].pack('c*')
+
+  str = fc.map {|x| x.chr}.join
+
+  puts "Contents of 8888: - #{str}"
+
+  puts "Write 9999"
+  fhi.writeFile("9999", "NINENINENINENINENINE")
+  fhi.pretty_display
+  fhi.get_bytes 16
+  fhi.lst
+  puts "Read file 9999"
+  fc = fhi.readFile "9999"
+  str = fc.map {|x| x.chr}.join
+  puts "Contents of 9999: - #{str}"
+
+  puts "Write AAAA"
+  fhi.writeFile("AAAA", "AAAAAAAAAAAAAAAAAA")
+  fhi.pretty_display
+  fhi.get_bytes 17
+  fhi.lst
+  puts "Read file AAAA"
+  fc = fhi.readFile "AAAA"
+  if nil != fc
+    str = fc.map {|x| x.chr}.join
+    puts "Contents of AAAA: - #{str}"
+  end
+
+  fhi.delFile "2222"
+
+  puts "Write AAAA"
+  fhi.writeFile("AAAA", "Hello \n World")
+  fhi.pretty_display
+  fhi.get_bytes 17
+  fhi.lst
+  puts "Read file AAAA"
+  fc = fhi.readFile "AAAA"
+  if nil != fc
+    str = fc.map {|x| x.chr}.join
+    puts "Contents of AAAA: - #{str}"
+  end
+
+
+
+
   rescue Exception => e
     print "TEST FAILED: " + e.message
   end

@@ -85,11 +85,11 @@ class MemFileSystem < FileSystem
   def readFile name
     fd = @toc.get_file_details name
 
-    if nil == fd
+    if [] == fd
       puts "<#{name}> File not Found"
       raise "<" + name + "> File Not Found" + " - " + __FILE__ + " " + __LINE__.to_s
     else
-      puts "readFile - file details are #{fd}"
+      # puts "readFile - file details are #{fd}"
       fb = @part.take fd
     end
     # puts "fs returning #{fb}"

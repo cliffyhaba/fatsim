@@ -139,6 +139,11 @@ class Toc
   
   # Delete file if present, else just fail silently  
   def del name
+    @toc_ary.each { |a|
+      if a.get_fname == name
+        @part_used -= a.get_length
+      end
+    }
     @toc_ary.delete_if { |x| x.get_fname == name }
   end
   
