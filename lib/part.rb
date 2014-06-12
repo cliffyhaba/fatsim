@@ -25,7 +25,6 @@ class Partition
   # called from line 115  (writeFile) in filesystem, after getting details from toc.add 
 
   def add haction, data
-    next_frag = 0
     # $LOG.debug "Setting partition at offset " + offset.to_s + " To " + data
     len = data.length
 
@@ -46,18 +45,18 @@ class Partition
     fl << 0
 
     haction.each { |a|
-      dary = [data[dindex, (a[1] - 2)]]
-      @part[a[0], (a[1] - 2)] = dary.pack("a*").unpack("C*")
+      dary = [data[dindex, a[1]]]
+      @part[a[0], a[1]] = dary.pack("a*").unpack("C*")
       # puts "fl[cnt - 1] = #{fl[cnt - 1]}"
-      if cnt < idx
-        @part[a[0] + (a[1] - 2), 2] = [fl[cnt - 1]].pack("n").unpack("C2")
-      else
-        @part[a[0] + (a[1] - 2), 2] = [0].pack("n").unpack("C2")
-      end
-      dindex += (a[1] - 2)
+      # if cnt < idx
+      #  @part[a[0] + a[1], 2] = [fl[cnt - 1]].pack("n").unpack("C2")
+      # else
+      #  @part[a[0] + a[1], 2] = [0].pack("n").unpack("C2")
+      # end
+      dindex += a[1]
       cnt += 1
     }
-    @rem -= (len + (FileSystem::get_link_size * idx))
+    @rem -= len # + (FileSystem::get_link_size * idx))
   end
 
 =begin

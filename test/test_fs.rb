@@ -9,10 +9,9 @@ $LOAD_PATH <<'.'<<'../lib'
 
 require 'logger'
 require 'filehandler'
-require 'record'
-require 'toc'
-require 'part'
 require 'utils'
+require 'test/unit/assertions'
+include Test::Unit::Assertions
 
 # we will try and log to some other terminal if we can
 if RUBY_PLATFORM.include? "linux"
@@ -227,7 +226,8 @@ if fhi
 
   puts "Write AAAA"
   fhi.writeFile("AAAA", "AAAAAAAAAAAAAAAAAA")
-  # fhi.pretty_display
+  fhi.pretty_display
+
   fhi.get_bytes 17
   fhi.lst
   puts "Read file AAAA"
@@ -237,11 +237,11 @@ if fhi
     puts "Contents of AAAA: - #{str}"
   end
 
-  fhi.delFile "2222"
-
+  fhi.delFile "AAAA"
+  ts = "HelloWorld"
   puts "Write AAAA"
-  fhi.writeFile("AAAA", "Hello \n World")
-  # fhi.pretty_display
+  fhi.writeFile("AAAA", ts)
+  fhi.pretty_display
   fhi.get_bytes 17
   fhi.lst
   puts "Read file AAAA"
@@ -251,8 +251,27 @@ if fhi
     puts "Contents of AAAA: - #{str}"
   end
 
+  assert str == ts, "File AAAA write/read failed"
 
+  fhi.writeFile("file1", "abcdef1111111111")
+  rrr = fhi.readFile "file1"
+  rr = rrr.map { |x| x.chr}.join
 
+  assert "abcdef1111111111" == rr, "File file1 write/read failed"
+  fhi.pretty_display
+  fhi.get_bytes 20
+
+  fhi.writeFile("file2", "qwqq")
+  rrr = fhi.readFile "file2"
+  rr = rrr.map { |x| x.chr}.join
+  assert "qwqq" == rr, "File file2 write/read failed"
+
+  fhi.get_bytes 21
+
+  fhi.writeFile("file3", "rtaa")
+  rrr = fhi.readFile "file3"
+  rr = rrr.map { |x| x.chr}.join
+  fhi.get_bytes 22
 
   rescue Exception => e
     print "TEST FAILED: " + e.message

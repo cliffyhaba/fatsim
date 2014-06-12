@@ -16,11 +16,11 @@ FRAG_ALWAYS = "yes"
 # - Can derive from this to implement file systems in RAM, flash etc.
 class FileSystem
 
-  LINK_SIZE = 2
+  # LINK_SIZE = 2
 
-  def self.get_link_size
-    LINK_SIZE
-  end
+  # def self.get_link_size
+  #  LINK_SIZE
+  # end
 
   # do any parent initialising
   def initialize size
@@ -98,8 +98,9 @@ class MemFileSystem < FileSystem
   
   def writeFile name, data
     # Add name to TOC
-    req = data.length + FileSystem::get_link_size
+    req = data.length # + FileSystem::get_link_size
     rem = @toc.get_available
+    puts "avail = #{rem} required = #{req}"
     if req > rem
       raise "Out of Disk Space" + " - " + __FILE__ + " " + __LINE__.to_s
     end

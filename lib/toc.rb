@@ -162,7 +162,7 @@ class Toc
     @toc_ary.each { |i|
       if i.get_fname == name
         # puts "found #{name} offset is #{i.get_offset}"
-        ret << [i.get_offset, i.get_length - 2]
+        ret << [i.get_offset, i.get_length]
       end
     }
     ret
@@ -218,14 +218,13 @@ class Toc
           break
         else
           # puts "A1 = #{a[1]}"
-          if a[1] > 3             # the minimum we need, 1 byte and two byte link
-            ary.push [k, a[1]]
-            size -= (a[1] - 2)    # adjust by 2 due to link overhead
-          end
+          # if a[1] > 3             # the minimum we need, 1 byte and two byte link
+          ary.push [k, a[1]]
+          size -= (a[1])    # adjust by 2 due to link overhead
+          # end
         end
       end
     }
     ary
   end
-
 end
