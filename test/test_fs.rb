@@ -37,13 +37,15 @@ $LOG_FMT = 'brief'
 $REQ_FILE_SIZE = 192
 
 $show_dump = true                      # Show hex dumps
-$r = nil                                # return value
+$r = 1                                 # return value
 $run_record = false
 
+little_string = "ABCDE"
+medium_string = "abcdefghijklmnopqrstuvwxyz"
 big_string = <<EOS
 abcdefghijklmnopqrstuvwxyz0123456789
 abcdefghijklmnopqrstuvwxyz0123456789
-abcdefghijklmnop
+abcdefghijklmnopqrstuvwxyz0123456789
 EOS
 
 
@@ -51,7 +53,7 @@ EOS
 # but uses the globals above
 $LOG = Logger.new($log_op).tap do |log|
   log.progname = 'Test'
-  log.level = Logger::DEBUG
+  log.level = Logger::WARN
   if $LOG_FMT == 'brief'
     log.formatter = proc do |severity, datetime, progname, msg| 
       "#{progname}: #{msg}\n"
@@ -71,10 +73,6 @@ end
 ############# Test Code Main
 #
 
-$LOG.info "START"
-print "\nStart\n"
-print "=====\n\n"
-
 # Maybe run the record test
 if $run_record == true
   record_test
@@ -85,33 +83,48 @@ begin
   $LOG.info ""
   $LOG.info "Making a FileHandler instance..."
   fhi = FileHandler.new $REQ_FILE_SIZE
+  assert fhi != nil, "Cannot get instance of FileHandler"
 rescue Exception => msg
   $LOG.info "!! " + msg.message
-  fhi = nil                           # we have failed
-  exit 1
 end
 
-# If we got a FileHandler instance the do the tests
-if fhi                                
-  begin  
+begin
+  fname = "file1"
+  fhi.format        
+  fhi.writeFile fname, little_string    
+  fhi.get_bytes 'Little String'
+  fhi.lst
+
+  $r = 0
+rescue Exception => e
+  print "TEST FAILED: " + e.message
+end
+
+$LOG.info "\n***** Return code is #{$r}"
+
+exit $r
+
+=begin
+    fname = "file1"
     fhi.format
         
     # 2. Do a write
-    fhi.writeFile "1111", "ONE"   
-    puts ""
-    color(BLUE) { fhi.lst }
+    fhi.writeFile fname, little_string   
+ 
     fhi.get_bytes  2  
-      
+ 
+    fhi.lst
+ 
     # 5. Add another file and list
     fhi.writeFile("2222", "TWOTWO")
     puts ""
-    color(BLUE) { fhi.lst }
+    fhi.lst
     fhi.get_bytes 5
 
     # 6. Delete FILE1
     fhi.delFile "1111"
     puts ""
-    color(BLUE) { fhi.lst }
+    fhi.lst
     fhi.get_bytes 6
     
     # 7. Add FILE3 this should use the freed space at the beginning of part
@@ -127,22 +140,6 @@ if fhi
     fhi.get_bytes 8
 
 
-=begin
-
-    # 9. 
-    fhi.delFile "FILE2"
-    fhi.delFile "FILE3"
-    fhi.writeFile("FILE5", "55555")
-    puts ""
-    color(BLUE) { fhi.lst }
-    show_hex fhi.get_bytes, 9
-
-    # 10.
-    fhi.writeFile("FILE6", "666666")
-    puts ""
-    color(BLUE) { fhi.lst }
-    show_hex fhi.get_bytes, 10
-=end
   
   puts "FINALLY LOOKS LIKE THIS..."
   # fhi.pretty_display
@@ -288,10 +285,12 @@ if fhi
   ge = gee.map { |x| x.chr}.join
   assert ge == "EIGHTEIGHTEIGHTEIGHTEIGHTEIGHTEIGHTEIGHTEIGHTEIGHT"
 
-  rescue Exception => e
-    print "TEST FAILED: " + e.message
-  end
-  
-else         # failed to get file handler instance
-  print "Cannot create new FileHandler\n"
-end
+  fhi.writeFile("file5", "++++++++++++++")
+  rrr = fhi.readFile "file5"
+  rr = rrr.map { |x| x.chr}.join
+  fhi.get_bytes 24
+
+  puts "free - #{fhi.get_free} bytes"
+
+  fhi.pretty_display
+=end

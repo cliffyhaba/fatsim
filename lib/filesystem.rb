@@ -100,7 +100,7 @@ class MemFileSystem < FileSystem
     # Add name to TOC
     req = data.length # + FileSystem::get_link_size
     rem = @toc.get_available
-    puts "avail = #{rem} required = #{req}"
+    $LOG.info "avail = #{rem} required = #{req}"
     if req > rem
       raise "Out of Disk Space" + " - " + __FILE__ + " " + __LINE__.to_s
     end

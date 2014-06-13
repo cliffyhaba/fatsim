@@ -25,10 +25,11 @@ class FileHandler
 
   # list files to STDOUT
   def lst
-    color(BLUE) {
-      puts "\n==>"
+    puts "\n==>"
+    color(GREEN) {
       @disk.lst
     }
+    puts "#{@disk.get_free} Bytes free\n"
   end
 
   def readFile(name)
@@ -36,7 +37,7 @@ class FileHandler
       r = @disk.readFile name
     rescue Exception => e
       $LOG.warn e.message
-      nil
+      throw e
     end
     # puts "fhi returning #{r}"
     r
@@ -48,7 +49,7 @@ class FileHandler
       @disk.writeFile name, data
     rescue Exception => e
       $LOG.warn e.message
-      nil  
+      throw e
     end  
   end
 

@@ -17,7 +17,7 @@ class Toc
     $LOG.info "Initialising TOC: Size is " + @size.to_s + " bytes"
     # TODO changed this to + 200
     @max_tocs = (@size / Record::TOC_ENTRY_SIZE) + 200
-    print "So we can have %d TOC entries\n" % @max_tocs
+    $LOG.info "So we can have %d TOC entries\n" % @max_tocs
     @toc_ary = Array.new
     @offset = 0
     @part_used = 0

@@ -63,7 +63,7 @@ def dsp a
       print " "
     end
 
-    if e > 31 && e < 128
+    if e > 32 && e < 128
       print e.chr
     else
       print "."
