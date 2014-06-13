@@ -238,7 +238,7 @@ if fhi
   end
 
   fhi.delFile "AAAA"
-  ts = "HelloWorld"
+  ts = "Hello\nWorld"
   puts "Write AAAA"
   fhi.writeFile("AAAA", ts)
   fhi.pretty_display
@@ -253,11 +253,11 @@ if fhi
 
   assert str == ts, "File AAAA write/read failed"
 
-  fhi.writeFile("file1", "abcdef1111111111")
+  fhi.writeFile("file1", "abcdef111111111")
   rrr = fhi.readFile "file1"
   rr = rrr.map { |x| x.chr}.join
 
-  assert "abcdef1111111111" == rr, "File file1 write/read failed"
+  assert "abcdef111111111" == rr, "File file1 write/read failed"
   fhi.pretty_display
   fhi.get_bytes 20
 
@@ -277,13 +277,12 @@ if fhi
   
   fhi.delFile "6666"
 
-  fhi.writeFile("file4", "asdf")
+  fhi.writeFile("file4", "asee")
   rrr = fhi.readFile "file4"
   rr = rrr.map { |x| x.chr}.join
   fhi.get_bytes 23
 
   puts "free - #{fhi.get_free} bytes"
-
 
   gee = fhi.readFile "8888"
   ge = gee.map { |x| x.chr}.join
