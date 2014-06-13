@@ -34,10 +34,10 @@ task :full => :all
 task  :what => [:header, :test, :footer]
 
 # Not used
-task  :build do
-  (0..5).each { |i|
-    puts"=> Build What?"
-  } 
+task  :repeat => :quiet do  |t, args|
+  puts "=========================================="
+  t.reenable
+  # t.invoke
 end
 
 # Cosmetics

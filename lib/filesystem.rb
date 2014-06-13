@@ -109,6 +109,7 @@ class MemFileSystem < FileSystem
       # print "!!!!! get_toc " + i.get_fname + "\n"
       if i.get_fname == name
         raise "File Already Exists: " + name + " - " + __FILE__ + " " + __LINE__.to_s
+        #throw :duplicatefile
       end      
     }
     

@@ -41,7 +41,7 @@ $r = 1                                 # return value
 $run_record = false
 
 little_string = "ABCDE"
-medium_string = "abcdefghijklmnopqrstuvwxyz"
+medium_string = "abcdefghijklmnopqrstu"
 big_string = <<EOS
 abcdefghijklmnopqrstuvwxyz0123456789
 abcdefghijklmnopqrstuvwxyz0123456789
@@ -69,6 +69,14 @@ def show_hex ary, pos = 0
   end
 end
 
+def test_add fhi, f, s
+  fhi.writeFile f, s    
+  fhi.get_bytes 'Little String'
+  fhi.lst
+  assert s == 
+    (fhi.readFile f).map {|x| x.chr}.join, "Read back fail <#{f}>\n"
+end  
+
 #
 ############# Test Code Main
 #
@@ -83,24 +91,65 @@ begin
   $LOG.info ""
   $LOG.info "Making a FileHandler instance..."
   fhi = FileHandler.new $REQ_FILE_SIZE
-  assert fhi != nil, "Cannot get instance of FileHandler"
 rescue Exception => msg
-  $LOG.info "!! " + msg.message
+  $LOG.warn "!! " + msg.message
+  exit 1
 end
 
+fhi.format        
+
 begin
-  fname = "file1"
-  fhi.format        
-  fhi.writeFile fname, little_string    
-  fhi.get_bytes 'Little String'
-  fhi.lst
+  # catch :duplicatefile do
+  begin  
+    test_add fhi, "file1", little_string
+    test_add fhi, "file2", little_string
+    test_add fhi, "file3", little_string
+    test_add fhi, "file1", little_string
+    
+    # if we get here, we haven't had an exception which we expect
+    raise SystemExit, "Duplicate file accepted\n"
+  rescue SystemExit => se 
+    throw se
+  rescue Exception => e
+    puts "Intended fail condition: #{e.message}"
+  end
+
+  begin
+    test_add fhi, "file5", medium_string
+    fhi.get_bytes "Medium String"
+  end
+
+  begin
+    fhi.delFile "file2"
+    # fhi.delFile "file3"
+    fhi.delFile "file5"
+
+    test_add fhi, "file6", big_string
+    s = (fhi.readFile "file6").map {|x| x.chr}.join
+    assert (s == big_string), "Bad file6 read back\n"
+    fhi.get_bytes "Big String"
+  end
+
+  begin
+    test_add fhi, "file7", medium_string
+  end
+
+  begin
+    test_add fhi, "file8", "abc"
+    raise SystemExit, "Write over boundry\n"
+  rescue SystemExit => se1 
+    throw se1
+  rescue Exception => e
+    puts "Intended fail condition: #{e.message}"
+  end
 
   $r = 0
+
 rescue Exception => e
   print "TEST FAILED: " + e.message
 end
 
-$LOG.info "\n***** Return code is #{$r}"
+$LOG.info "***** Return code is #{$r}"
 
 exit $r
 
