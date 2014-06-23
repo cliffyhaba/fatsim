@@ -4,9 +4,14 @@ $LOAD_PATH <<'.'
 
 require 'utils'
 
+# 65536 max file size or 0xFFFFFFFF
+SMALL_FILE_SIZE = "C2"
+LARGE_FILE_SIZE = "C4"
+
+FILE_SIZE = LARGE_FILE_SIZE
+
 # The implementation of an individual entry
 class Record < Array
-  TOC_ENTRY_SIZE = 16
   TOC_NAME_SIZE  = 10
   
   attr_accessor :offset
@@ -75,15 +80,15 @@ class Record < Array
   end
                                                       # the binary versions of the above methods
   def set_byte_offset i
-    @offset = i.pack("C2").unpack("n")
+    @offset = i.pack(FILE_SIZE).unpack("n")
   end
 
   def set_byte_length i
-    @length = i.pack("C2").unpack("n")
+    @length = i.pack(FILE_SIZE).unpack("n")
   end
 
   def set_byte_status i
-    @status = i.pack("C2").unpack("n")
+    @status = i.pack(FILE_SIZE).unpack("n")
   end
 
   def set_byte_fname s
@@ -91,17 +96,17 @@ class Record < Array
   end
   
   def get_byte_offset
-    offset_ary = [@offset].pack("n").unpack("C2")   # make a byte array from offset
+    offset_ary = [@offset].pack("n").unpack(FILE_SIZE)   # make a byte array from offset
     offset_ary
   end
 
   def get_byte_length
-    length_ary = [@length].pack("n").unpack("C2")   # make a byte array from length
+    length_ary = [@length].pack("n").unpack(FILE_SIZE)   # make a byte array from length
     length_ary
   end
 
   def get_byte_status
-    status_ary = [@status].pack("n").unpack("C2")   # make a byte array from status
+    status_ary = [@status].pack("n").unpack(FILE_SIZE)   # make a byte array from status
     status_ary
   end
   
@@ -111,9 +116,9 @@ class Record < Array
   end
 
   def get_byte_rec
-    offset_ary = [@offset].pack("n").unpack("C2")   # make a byte array from offset
-    length_ary = [@length].pack("n").unpack("C2")   # make a byte array from length
-    status_ary = [@status].pack("n").unpack("C2")   # make a byte array from status
+    offset_ary = [@offset].pack("n").unpack(FILE_SIZE)   # make a byte array from offset
+    length_ary = [@length].pack("n").unpack(FILE_SIZE)   # make a byte array from length
+    status_ary = [@status].pack("n").unpack(FILE_SIZE)   # make a byte array from status
     fname_ary = [@fname].pack("A10").unpack("C10")  # make byte array from fname
     offset_ary + length_ary + status_ary + fname_ary
   end
@@ -124,4 +129,10 @@ class Record < Array
     @offset <=> p.offset
   end
 
+  def self.length
+    i = [1].to_a.pack("n").unpack(FILE_SIZE)
+    numsz = i.size
+    # puts "numsz = #{numsz}"
+    TOC_NAME_SIZE + (numsz * 3)
+  end
 end

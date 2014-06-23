@@ -135,16 +135,23 @@ begin
   end
 
   begin
-    test_add fhi, "file8", "abc"
-    raise SystemExit, "Write over boundry\n"
+    test_add fhi, "file8", 
+    "abcaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabc"
+    # raise SystemExit, "Write over boundry\n"
+    result = "FAILED"
   rescue SystemExit => se1 
     throw se1
   rescue Exception => e
     puts "Intended fail condition: #{e.message}"
+    result = "PASSED"    
   end
 
   $r = 0
+  puts "Result: #{result}"
+  t = fhi.get_details["toc"]
+  p = fhi.get_details["part"]
 
+  puts "Disk details: -\n\tTOC  - #{t}\n\tPART - #{p}"
 rescue Exception => e
   print "TEST FAILED: " + e.message
 end

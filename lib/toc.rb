@@ -16,12 +16,12 @@ class Toc
     @size = size
     $LOG.info "Initialising TOC: Size is " + @size.to_s + " bytes"
     # TODO changed this to + 200
-    @max_tocs = (@size / Record::TOC_ENTRY_SIZE) + 200
-    $LOG.info "So we can have %d TOC entries\n" % @max_tocs
+    # @max_tocs = (@size / Record::TOC_ENTRY_SIZE) + 200
+    # $LOG.info "So we can have %d TOC entries\n" % @max_tocs
     @toc_ary = Array.new
     @offset = 0
     @part_used = 0
-    @part_size = @size * 3
+    @part_size = @size
   end
 
   # Return the TOC data array
@@ -53,10 +53,10 @@ class Toc
   def add name, len
     $LOG.info "Adding an entry to TOC, length is %d" % len
         
-    if @toc_ary.size >= @max_tocs
-      $LOG.warn "TOC entry limit reached, continue..."
+    # if @toc_ary.size >= @max_tocs
+    #  $LOG.warn "TOC entry limit reached, continue..."
       # ret = -1    
-    elsif @part_used + len > @part_size
+    if @part_used + len > @part_size
       $LOG.warn "TOC No More Space: Used = " \
         + @part_used.to_s + " Len = "        \
         + len.to_s + " Total size = " + @part_size.to_s
@@ -166,6 +166,11 @@ class Toc
       end
     }
     ret
+  end
+
+  def get_size
+    # puts "record length = #{Record.length}"
+    @toc_ary.size * Record.length
   end
 
   private

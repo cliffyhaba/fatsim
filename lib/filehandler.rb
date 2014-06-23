@@ -80,5 +80,9 @@ class FileHandler
   def pretty_display
     @disk.pretty_display
   end
+
+  def get_details
+    d = @disk.get_details
+  end
 end
 

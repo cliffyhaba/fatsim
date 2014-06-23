@@ -70,8 +70,8 @@ class MemFileSystem < FileSystem
     else
       super
       @size = size
-      @toc = Toc.new @size / 4
-      @part = Partition.new (@size / 4) * 3
+      @toc = Toc.new @size
+      @part = Partition.new @size
     end
     $LOG.info "Initialised MemFileSystem Instance"
   end
@@ -167,6 +167,10 @@ class MemFileSystem < FileSystem
   
   def pretty_display
     @toc.pretty_display
+  end
+
+  def get_details
+    {"toc" => @toc.get_size, "part" => @part.get_size}
   end
 
   private
