@@ -169,8 +169,16 @@ class MemFileSystem < FileSystem
     @toc.pretty_display
   end
 
+  # details are returned in a map: -
+  #  "toc"      Total bytes
+  #  "part"     Total bytes
+  #  "files"    Number of files
   def get_details
-    {"toc" => @toc.get_size, "part" => @part.get_size, "files" => @toc.get_filecount}
+    {
+      "toc" => @toc.get_size, 
+      "part" => @part.get_size, 
+      "files" => @toc.get_filecount
+    }
   end
 
   private
