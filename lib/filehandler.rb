@@ -6,6 +6,8 @@
 require 'logger'
 require 'filesystem'
 
+SHOW_DUMP = false
+
 # =The Interface for the File System
 # =To simulate a very simple FAT like file system in RAM
 # ==A top level class for simple read/write to some abstracted file system
@@ -58,11 +60,15 @@ class FileHandler
   end
   
   def dump_toc
-    dump @disk.dump_toc
+    if SHOW_DUMP == true
+      dump @disk.dump_toc
+    end
   end
   
   def dump_part
-    dump @disk.dump_part
+    if SHOW_DUMP
+      dump @disk.dump_part
+    end
   end
 
   # method to show TOC records as hex and hex dump the partition
@@ -71,10 +77,11 @@ class FileHandler
   end
 
   def get_bytes n
-    puts "DUMP #{n}"
-
-    dump_toc
-    dump_part
+    if SHOW_DUMP
+      puts "DUMP #{n}"
+      dump_toc
+      dump_part
+    end
   end
 
   def pretty_display

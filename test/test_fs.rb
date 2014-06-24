@@ -34,7 +34,7 @@ end
 
 # Globals and Constants
 $LOG_FMT = 'brief'
-$REQ_FILE_SIZE = 384
+$REQ_FILE_SIZE = 65536
 
 $show_dump = true                      # Show hex dumps
 $r = 1                                 # return value
