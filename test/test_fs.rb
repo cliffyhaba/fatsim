@@ -34,7 +34,7 @@ end
 
 # Globals and Constants
 $LOG_FMT = 'brief'
-$REQ_FILE_SIZE = 192
+$REQ_FILE_SIZE = 384
 
 $show_dump = true                      # Show hex dumps
 $r = 1                                 # return value
@@ -148,10 +148,12 @@ begin
 
   $r = 0
   puts "Result: #{result}"
-  t = fhi.get_details["toc"]
-  p = fhi.get_details["part"]
+  rr = fhi.get_details
+  t = rr["toc"]
+  p = rr["part"]
+  fs = rr["files"]
 
-  puts "Disk details: -\n\tTOC  - #{t}\n\tPART - #{p}"
+  puts "Disk details: -\n\tTOC   - #{t} bytes\n\tPART  - #{p} bytes\n\tFILES - #{fs}"
 rescue Exception => e
   print "TEST FAILED: " + e.message
 end

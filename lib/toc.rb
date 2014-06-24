@@ -137,6 +137,23 @@ class Toc
     ret
   end
   
+  def get_filecount
+    # could have done the above like this, we're learning right?
+    # ar = Hash[@toc_ary.uniq.map { |i| [i, @toc_ary.count(i)]}]
+=begin    
+    ret = Array.new
+    @toc_ary.each { |i|
+      if i.get_status == 0
+        ret << i.get_fname
+      end
+    }
+    ret.size
+=end
+    ar = @toc_ary
+    puts "ar = #{ar.uniq!}"
+    ar.size
+  end
+
   # Delete file if present, else just fail silently  
   def del name
     @toc_ary.each { |a|

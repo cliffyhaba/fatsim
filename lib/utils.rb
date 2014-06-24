@@ -23,7 +23,11 @@ def dump what
   
   asky = []
 
+  rem = 0
+
   what.each_index { |i|
+
+    rem = i
     
     if nil == what.at(i)
       ia = 0
@@ -49,7 +53,13 @@ def dump what
       asky << ia
     end
   }
-  print "  "
+
+  if 0 != ((rem + 1) % 16)
+    print "  " * (16 - ((rem - 1) % 16))
+  else    
+    print "  "
+  end
+
   dsp asky
   
   # print "\n**************************************************\n"

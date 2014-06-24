@@ -170,7 +170,7 @@ class MemFileSystem < FileSystem
   end
 
   def get_details
-    {"toc" => @toc.get_size, "part" => @part.get_size}
+    {"toc" => @toc.get_size, "part" => @part.get_size, "files" => @toc.get_filecount}
   end
 
   private
